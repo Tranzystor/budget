@@ -1,16 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const app = express();
+const run = async () => {
+  const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+  const initDb = require('./db');
+  await initDb();
 
-const setupRoutes = require('./routing');
-setupRoutes(app);
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
 
-let port = 1234;
+  const setupRoutes = require('./routing');
+  setupRoutes(app);
 
-app.listen(port, () => {
-  console.log('Server is up and running on port number ' + port);
-});
+  let port = 1234;
+
+  app.listen(port, () => {
+    console.log('Server is up and running on port number ' + port);
+  });
+};
+
+run();

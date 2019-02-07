@@ -1,5 +1,10 @@
+const firstCollection = require('../db/index');
+
 const setupRoutes = app => {
-  app.get('/', function(req, res) {
+  app.get('/', (req, res) => {
+    if (firstCollection) {
+      console.log('firstCollection firstCollection is available');
+    }
     res.send('budget-backend!');
   });
 };
