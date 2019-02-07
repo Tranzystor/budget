@@ -1,26 +1,14 @@
-const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 
-let firstCollection = undefined;
-module.exports = firstCollection;
+const dbName = 'testdb';
+const url = `mongodb://localhost:27017/${dbName}`;
 
 const initDb = async () => {
-  const dbName = 'testdb';
-  const url = `mongodb://localhost:27017/${dbName}`;
-
-  const db = await MongoClient.connect(url, { useNewUrlParser: true });
-  const dbb = db.db(dbName);
-  const dbList = await dbb.admin().listDatabases();
-  console.log(dbList);
-
-  firstCollection = dbb.collection('first');
-
-  const results = await dbb
-    .collection('first')
-    .find({})
-    .toArray();
-  console.log(results);
-
-  db.close();
+  await mongoose.connect(url, { useNewUrlParser: true }).catch(error => {
+    console.log(error);
+    return new Error(error);
+  });
+  console.log('connected');
 };
 
 module.exports = initDb;

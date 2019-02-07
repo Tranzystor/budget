@@ -1,12 +1,8 @@
-const firstCollection = require('../db/index');
+const transactionsController = require('../controllers/transactionsController');
 
 const setupRoutes = app => {
-  app.get('/', (req, res) => {
-    if (firstCollection) {
-      console.log('firstCollection firstCollection is available');
-    }
-    res.send('budget-backend!');
-  });
+  app.get('/', transactionsController.getAll);
+  app.put('/', transactionsController.addOne);
 };
 
 module.exports = setupRoutes;
